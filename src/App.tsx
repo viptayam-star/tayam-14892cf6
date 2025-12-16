@@ -12,7 +12,6 @@ import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
 import Packages from "./pages/Packages";
 import Contact from "./pages/Contact";
-import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,7 +32,6 @@ const App = () => (
                   <Route path="/portfolio" element={<Portfolio />} />
                   <Route path="/packages" element={<Packages />} />
                   <Route path="/contact" element={<Contact />} />
-                  <Route path="/auth" element={<Auth />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>

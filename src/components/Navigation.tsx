@@ -16,7 +16,6 @@ const Navigation = () => {
     { key: 'portfolio', path: '/portfolio' },
     { key: 'packages', path: '/packages' },
     { key: 'contact', path: '/contact' },
-    { key: 'auth', path: '/auth' },
   ];
 
   const NavLinks = ({ mobile = false, onItemClick }: { mobile?: boolean; onItemClick?: () => void }) => (
