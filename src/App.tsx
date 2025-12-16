@@ -13,8 +13,30 @@ import Portfolio from "./pages/Portfolio";
 import Packages from "./pages/Packages";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import useScreenshotProtection from "@/hooks/useScreenshotProtection";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  useScreenshotProtection();
+  
+  return (
+    <div className="min-h-screen flex flex-col cursor-sword">
+      <Navigation />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+      <ChatBot />
+    </div>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -24,20 +46,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen flex flex-col cursor-sword">
-              <Navigation />
-              <main className="flex-1">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/portfolio" element={<Portfolio />} />
-                  <Route path="/packages" element={<Packages />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-              <Footer />
-              <ChatBot />
-            </div>
+            <AppContent />
           </BrowserRouter>
         </TooltipProvider>
       </LanguageProvider>
