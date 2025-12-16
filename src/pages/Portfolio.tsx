@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import Card3D from '@/components/Card3D';
+import ScrollReveal from '@/components/ScrollReveal';
+import TextReveal from '@/components/TextReveal';
+import AnimatedBackground from '@/components/AnimatedBackground';
 
 // Import portfolio images
 import sevenUpAd from '@/assets/portfolio/7up-ad.png';
@@ -305,97 +310,179 @@ const Portfolio = () => {
     : portfolioItems.filter(item => item.category === activeFilter);
 
   return (
-    <div className="min-h-screen pt-20 pb-20">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen pt-20 pb-20 relative overflow-hidden">
+      <AnimatedBackground />
+      
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            {t('portfolioTitle')}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, type: 'spring' }}
+            className="mb-6"
+          >
+            <span className="px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
+              ✨ {t('portfolioTitle')}
+            </span>
+          </motion.div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 text-foreground">
+            <TextReveal text={t('portfolioTitle')} />
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {t('portfolioSubtitle')}
-          </p>
+          
+          <ScrollReveal delay={0.3}>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              {t('portfolioSubtitle')}
+            </p>
+          </ScrollReveal>
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12 animate-slide-up">
-          {filters.map((filter) => (
-            <Button
-              key={filter.key}
-              variant={activeFilter === filter.key ? 'default' : 'outline'}
-              onClick={() => setActiveFilter(filter.key)}
-              className={`hover-glow ${
-                activeFilter === filter.key 
-                  ? 'btn-gradient text-white border-0' 
-                  : ''
-              }`}
-            >
-              {filter.label}
-            </Button>
-          ))}
-        </div>
+        <ScrollReveal delay={0.4}>
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
+            {filters.map((filter) => (
+              <motion.div
+                key={filter.key}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  variant={activeFilter === filter.key ? 'default' : 'outline'}
+                  onClick={() => setActiveFilter(filter.key)}
+                  className={`relative overflow-hidden ${
+                    activeFilter === filter.key 
+                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25' 
+                      : 'hover:border-primary/50 backdrop-blur-sm bg-background/50'
+                  }`}
+                >
+                  <span className="relative z-10">{filter.label}</span>
+                  {activeFilter === filter.key && (
+                    <motion.div
+                      layoutId="activeFilter"
+                      className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80"
+                      transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+                    />
+                  )}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+        </ScrollReveal>
 
         {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredItems.map((item, index) => (
-            <Dialog key={item.id}>
-              <DialogTrigger asChild>
-                <div 
-                  className="portfolio-card cursor-pointer animate-scale-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="bg-card rounded-lg overflow-hidden shadow-lg">
-                    <div className="aspect-square bg-muted relative overflow-hidden">
-                      <img 
-                        src={item.image} 
-                        alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-primary/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <span className="text-white font-semibold">
-                          {t('viewPortfolio')}
-                        </span>
+        <motion.div 
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item, index) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.05,
+                  type: 'spring',
+                  bounce: 0.3
+                }}
+              >
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <div className="cursor-pointer" style={{ perspective: '1000px' }}>
+                      <Card3D>
+                        <div className="bg-card rounded-xl overflow-hidden shadow-xl border border-border/50 backdrop-blur-sm group">
+                          <div className="aspect-square bg-muted relative overflow-hidden">
+                            <img 
+                              src={item.image} 
+                              alt={item.title}
+                              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
+                            />
+                            <motion.div 
+                              className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-8"
+                            >
+                              <motion.span 
+                                className="text-foreground font-bold text-lg px-6 py-3 bg-primary/90 rounded-full backdrop-blur-sm"
+                                initial={{ y: 20, opacity: 0 }}
+                                whileHover={{ y: 0, opacity: 1 }}
+                              >
+                                {t('viewPortfolio')} →
+                              </motion.span>
+                            </motion.div>
+                            
+                            {/* Shimmer effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                          </div>
+                          <div className="p-5">
+                            <h3 className="font-bold text-foreground mb-2 text-lg group-hover:text-primary transition-colors">
+                              {item.title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground line-clamp-2">
+                              {item.description}
+                            </p>
+                            <div className="mt-3 flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                              <span className="text-xs text-muted-foreground">
+                                {filters.find(f => f.key === item.category)?.label}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card3D>
+                    </div>
+                  </DialogTrigger>
+                  
+                  <DialogContent className="max-w-4xl bg-card/95 backdrop-blur-xl border-border/50">
+                    <motion.div 
+                      className="grid md:grid-cols-2 gap-6"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <div className="aspect-square bg-muted rounded-xl overflow-hidden">
+                        <img 
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-foreground mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </DialogTrigger>
-              
-              <DialogContent className="max-w-4xl">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="aspect-square bg-muted rounded-lg overflow-hidden">
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-bold text-foreground">
-                      {item.title}
-                    </h2>
-                    <p className="text-muted-foreground">
-                      {item.description}
-                    </p>
-                    <div className="flex gap-2">
-                      <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
-                        {filters.find(f => f.key === item.category)?.label}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </DialogContent>
-            </Dialog>
-          ))}
-        </div>
+                      <div className="space-y-4 flex flex-col justify-center">
+                        <motion.div
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                            {filters.find(f => f.key === item.category)?.label}
+                          </span>
+                        </motion.div>
+                        <motion.h2 
+                          className="text-3xl font-bold text-foreground"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 }}
+                        >
+                          {item.title}
+                        </motion.h2>
+                        <motion.p 
+                          className="text-muted-foreground text-lg"
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          {item.description}
+                        </motion.p>
+                      </div>
+                    </motion.div>
+                  </DialogContent>
+                </Dialog>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   );
