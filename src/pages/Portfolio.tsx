@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from '@/components/ui/dialog';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import Card3D from '@/components/Card3D';
 import ScrollReveal from '@/components/ScrollReveal';
 import TextReveal from '@/components/TextReveal';
 import AnimatedBackground from '@/components/AnimatedBackground';
+import ImageWithWatermark from '@/components/ImageWithWatermark';
 
 // Import portfolio images
 import sevenUpAd from '@/assets/portfolio/7up-ad.png';
@@ -396,10 +398,10 @@ const Portfolio = () => {
                       <Card3D>
                         <div className="bg-card rounded-xl overflow-hidden shadow-xl border border-border/50 backdrop-blur-sm group">
                           <div className="aspect-square bg-muted relative overflow-hidden">
-                            <img 
+                            <ImageWithWatermark 
                               src={item.image} 
                               alt={item.title}
-                              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
+                              className="w-full h-full transition-all duration-700 group-hover:scale-110 group-hover:rotate-2"
                             />
                             <motion.div 
                               className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-8"
@@ -414,7 +416,7 @@ const Portfolio = () => {
                             </motion.div>
                             
                             {/* Shimmer effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
                           </div>
                           <div className="p-5">
                             <h3 className="font-bold text-foreground mb-2 text-lg group-hover:text-primary transition-colors">
@@ -436,6 +438,9 @@ const Portfolio = () => {
                   </DialogTrigger>
                   
                   <DialogContent className="max-w-4xl bg-card/95 backdrop-blur-xl border-border/50">
+                    <VisuallyHidden>
+                      <DialogTitle>{item.title}</DialogTitle>
+                    </VisuallyHidden>
                     <motion.div 
                       className="grid md:grid-cols-2 gap-6"
                       initial={{ opacity: 0, y: 20 }}
@@ -443,10 +448,10 @@ const Portfolio = () => {
                       transition={{ duration: 0.5 }}
                     >
                       <div className="aspect-square bg-muted rounded-xl overflow-hidden">
-                        <img 
+                        <ImageWithWatermark 
                           src={item.image} 
                           alt={item.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full"
                         />
                       </div>
                       <div className="space-y-4 flex flex-col justify-center">
