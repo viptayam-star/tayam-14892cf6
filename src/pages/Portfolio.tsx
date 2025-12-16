@@ -37,6 +37,8 @@ import fastFoodMenu from '@/assets/portfolio/fast-food-menu.png';
 import pizzaElKing from '@/assets/portfolio/pizza-el-king.png';
 import saladAd from '@/assets/portfolio/salad-ad.png';
 import siroInternet from '@/assets/portfolio/siro-hadoum-internet.png';
+import ferrariDesign from '@/assets/portfolio/ferrari-design.png';
+import perfumeDesign from '@/assets/portfolio/perfume-design.png';
 
 const Portfolio = () => {
   const { t } = useLanguage();
@@ -282,9 +284,23 @@ const Portfolio = () => {
       image: siroInternet,
       description: 'إعلان إبداعي لخدمة إنترنت سيرو هضوم بتصميم ثلاثي الأبعاد جذاب باللون البنفسجي',
     },
+    {
+      id: 34,
+      title: 'Ferrari Racing Design',
+      category: 'social',
+      image: ferrariDesign,
+      description: 'تصميم إبداعي لسيارة فيراري سباق مع تايبوغرافي جريء وخلفية حمراء ديناميكية',
+    },
+    {
+      id: 35,
+      title: 'GRD Royal Perfume',
+      category: 'branding',
+      image: perfumeDesign,
+      description: 'تصميم منتج عطر فاخر مع تأثيرات ثلاثية الأبعاد وخلفية زرقاء أنيقة',
+    },
   ];
 
-  const filteredItems = activeFilter === 'all' 
+  const filteredItems = activeFilter === 'all'
     ? portfolioItems 
     : portfolioItems.filter(item => item.category === activeFilter);
 
