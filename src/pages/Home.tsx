@@ -27,12 +27,13 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <AnimatedBackground />
         
-        {/* Background Video */}
+        {/* Background Video - lazy loaded */}
         <video 
           autoPlay 
           loop 
           muted 
           playsInline
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover opacity-30"
         >
           <source src={heroVideo} type="video/mp4" />
