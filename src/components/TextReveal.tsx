@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 interface TextRevealProps {
@@ -8,15 +8,15 @@ interface TextRevealProps {
   staggerChildren?: number;
 }
 
-const TextReveal: React.FC<TextRevealProps> = ({
+const TextReveal: React.FC<TextRevealProps> = memo(({
   text,
   className = '',
   delay = 0,
   staggerChildren = 0.03,
 }) => {
-  const words = text.split(' ');
+  const words = useMemo(() => text.split(' '), [text]);
 
-  const container = {
+  const container = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -25,9 +25,9 @@ const TextReveal: React.FC<TextRevealProps> = ({
         staggerChildren,
       },
     },
-  };
+  }), [delay, staggerChildren]);
 
-  const child = {
+  const child = useMemo(() => ({
     hidden: {
       opacity: 0,
       y: 50,
@@ -43,7 +43,7 @@ const TextReveal: React.FC<TextRevealProps> = ({
         stiffness: 100,
       },
     },
-  };
+  }), []);
 
   return (
     <motion.span
@@ -66,6 +66,8 @@ const TextReveal: React.FC<TextRevealProps> = ({
       ))}
     </motion.span>
   );
-};
+});
+
+TextReveal.displayName = 'TextReveal';
 
 export default TextReveal;

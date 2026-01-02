@@ -7,7 +7,6 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import ChatBot from "@/components/ChatBot";
 import MobileWarning from "@/components/MobileWarning";
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
@@ -34,7 +33,6 @@ const AppContent = () => {
         </Routes>
       </main>
       <Footer />
-      <ChatBot />
       <MobileWarning />
     </div>
   );

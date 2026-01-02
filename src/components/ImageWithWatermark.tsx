@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 interface ImageWithWatermarkProps {
   src: string;
@@ -7,7 +7,7 @@ interface ImageWithWatermarkProps {
   className?: string;
 }
 
-const ImageWithWatermark: React.FC<ImageWithWatermarkProps> = ({
+const ImageWithWatermark: React.FC<ImageWithWatermarkProps> = memo(({
   src,
   alt,
   watermarkText = 'Design Pulse',
@@ -18,58 +18,37 @@ const ImageWithWatermark: React.FC<ImageWithWatermarkProps> = ({
       <img
         src={src}
         alt={alt}
+        loading="lazy"
+        decoding="async"
         className="w-full h-full object-cover"
         draggable={false}
         onContextMenu={(e) => e.preventDefault()}
       />
-      
-      {/* Watermark Pattern */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        {/* Diagonal watermarks */}
-        <div 
-          className="absolute inset-0 flex items-center justify-center"
+
+      {/* Single CSS-based watermark overlay - replaces 9-element grid */}
+      <div
+        className="absolute inset-0 pointer-events-none select-none flex items-center justify-center"
+        aria-hidden="true"
+      >
+        <span
+          className="text-white/25 text-3xl font-bold tracking-wider"
           style={{
-            transform: 'rotate(-30deg) scale(1.5)',
+            textShadow: '2px 2px 6px rgba(0,0,0,0.3)',
           }}
         >
-          <div className="grid grid-cols-3 gap-16 opacity-20">
-            {Array.from({ length: 9 }).map((_, i) => (
-              <span
-                key={i}
-                className="text-white text-2xl font-bold whitespace-nowrap drop-shadow-lg"
-                style={{
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                {watermarkText}
-              </span>
-            ))}
-          </div>
-        </div>
-        
-        {/* Center watermark */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span
-            className="text-white/30 text-4xl font-bold tracking-wider"
-            style={{
-              textShadow: '2px 2px 8px rgba(0,0,0,0.3)',
-            }}
-          >
-            © {watermarkText}
-          </span>
-        </div>
+          © {watermarkText}
+        </span>
       </div>
-      
+
       {/* Invisible overlay to prevent easy inspection */}
-      <div 
+      <div
         className="absolute inset-0 bg-transparent"
-        style={{ 
-          backgroundImage: 'url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7")',
-          backgroundRepeat: 'repeat',
-        }}
+        aria-hidden="true"
       />
     </div>
   );
-};
+});
+
+ImageWithWatermark.displayName = 'ImageWithWatermark';
 
 export default ImageWithWatermark;
