@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo, memo, useRef } from '
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Languages, Menu, X, Sparkles } from 'lucide-react';
+import { Moon, Sun, Languages, Menu, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
+import logo from '@/assets/logo.jpeg';
 
 const Navigation = memo(() => {
   const { t, toggleLanguage, language } = useLanguage();
@@ -63,16 +64,11 @@ const Navigation = memo(() => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-primary/30 transition-shadow duration-300">
-                    <Sparkles className="w-5 h-5 text-primary-foreground" />
-                  </div>
-                  <div className="absolute inset-0 rounded-xl bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-                <span className="text-xl font-bold tracking-tight">
-                  <span className="text-gradient-static">Design</span>
-                  <span className="text-foreground">Pulse</span>
-                </span>
+                <img 
+                  src={logo} 
+                  alt="DesignPulse Logo" 
+                  className="h-10 w-auto object-contain"
+                />
               </motion.div>
             </Link>
 
