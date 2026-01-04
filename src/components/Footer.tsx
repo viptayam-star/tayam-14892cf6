@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Instagram, Twitter, Dribbble, Linkedin, Sparkles, Heart, Award, ArrowUpRight } from 'lucide-react';
+import { Instagram, Twitter, Dribbble, Linkedin, Heart, Award, ArrowUpRight } from 'lucide-react';
+import logo from '@/assets/logo.jpeg';
 
 const Footer = () => {
   const { language, t } = useLanguage();
@@ -34,11 +35,13 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
             {/* Brand Section */}
             <div className="space-y-6">
-              <Link to="/" className="inline-flex items-center gap-2 group">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:shadow-primary/30 transition-shadow duration-300">
-                  <Sparkles className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <span className="text-xl font-bold tracking-tight">
+              <Link to="/" className="inline-flex items-center gap-3 group">
+                <img 
+                  src={logo} 
+                  alt="DesignPulse Logo" 
+                  className="h-14 w-14 rounded-full object-cover shadow-lg"
+                />
+                <span className="text-2xl font-bold tracking-tight">
                   <span className="text-gradient-static">Design</span>
                   <span className="text-foreground">Pulse</span>
                 </span>
