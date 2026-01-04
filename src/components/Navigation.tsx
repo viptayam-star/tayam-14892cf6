@@ -67,9 +67,9 @@ const Navigation = memo(() => {
                 <img 
                   src={logo} 
                   alt="DesignPulse Logo" 
-                  className="h-12 w-12 rounded-full object-cover shadow-lg"
+                  className="h-14 w-14 rounded-full object-cover shadow-lg"
                 />
-                <span className="text-xl font-bold tracking-tight">
+                <span className="text-2xl font-bold tracking-tight">
                   <span className="text-gradient-static">Design</span>
                   <span className="text-foreground">Pulse</span>
                 </span>
