@@ -60,15 +60,19 @@ const Navigation = memo(() => {
             {/* Logo */}
             <Link to="/" className="relative group">
               <motion.div
-                className="flex items-center gap-2"
+                className="flex items-center gap-3"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <img 
                   src={logo} 
                   alt="DesignPulse Logo" 
-                  className="h-10 w-auto object-contain"
+                  className="h-12 w-12 rounded-full object-cover shadow-lg"
                 />
+                <span className="text-xl font-bold tracking-tight">
+                  <span className="text-gradient-static">Design</span>
+                  <span className="text-foreground">Pulse</span>
+                </span>
               </motion.div>
             </Link>
 
